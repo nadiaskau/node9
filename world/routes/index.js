@@ -21,7 +21,7 @@ router.post("/country", function(req, res, next) {
 });
 
 router.get('/countryData', function(req, res, next) {
-    modCountry.getCountries2(res);
+    modCountry.getCountries(res, 'countryData');
 });
 router.post("/countryData", function(req, res, next) {
     modCountry.postCountry(req, res, next);

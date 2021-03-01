@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/country', function(req, res, next) {
-    modCountry.getCountries(res);
+    modCountry.getCountries(res, 'country');
 });
 router.get('/country/:country', function(req, res, next) {
     modCountry.getCountry(res, req.params.country);
@@ -21,10 +21,7 @@ router.post("/country", function(req, res, next) {
 });
 
 router.get('/countryData', function(req, res, next) {
-    res.render('countryData', {
-        title: 'Fragments of the World',
-        subtitle: 'Enter Country Data'
-    });
+    modCountry.getCountries2(res);
 });
 router.post("/countryData", function(req, res, next) {
     modCountry.postCountry(req, res, next);

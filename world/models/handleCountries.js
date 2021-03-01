@@ -3,6 +3,7 @@ const mon = require("./mongoWrap");
 const dbServer = "localhost";
 const dbName = "world";
 
+//Front page with list of countries
 exports.getCountries = async function (res) {
     try {
         let cs = await mon.retrieve(dbServer, dbName, "country", {});
@@ -16,6 +17,21 @@ exports.getCountries = async function (res) {
     }
 }
 
+//Register country
+exports.getCountries2 = async function (res) {
+    try {
+        let cs = await mon.retrieve(dbServer, dbName, "country", {});
+        res.render('countryData', {
+            title: 'Fragments of the World',
+            subtitle: 'Select Country',
+            countries: cs
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+//Show selected contry
 exports.getCountry = async function (res, ctryname) {
     try {
         let cs = await mon.retrieve(dbServer, dbName, "country", { "name": ctryname });

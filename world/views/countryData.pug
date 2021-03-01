@@ -21,7 +21,9 @@ block content
                 tr
                     td.col_l Continent
                     td
-                        input(type='text' name='continent' placeholder='name of continent' required)
+                        select(name='continent')
+                            each country in countries
+                                option #{country.continent}
                 tr
                     td.col_l Region
                     td

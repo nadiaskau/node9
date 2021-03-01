@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mong = require("./mongooseWrap");
+const goose = require("./mongooseWrap");
 
 const countrySchema = mongoose.Schema({
     code: String, 
@@ -21,6 +21,15 @@ const countrySchema = mongoose.Schema({
 
 const Country = mongoose.model("Country", countrySchema, 'country');
 
-exports.getCountries = function(){
-    mong.retrieve(Country);
+exports.getCountries = async function(res){
+    try {
+        let countries = await goose.retrieve(Country);
+        res.render('country', {
+            title: 'Fragments of the World',
+            subtitle: 'Select Country',
+            countries: countries
+        });
+    } catch (e) {
+        console.log(e);
+    }
 };

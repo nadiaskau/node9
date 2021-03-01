@@ -55,7 +55,9 @@ block content
                 tr
                     td.col_l Government Form
                     td
-                        input(type='text' name='governmentform' placeholder='Form of Government' required)
+                        select(name='governmentform')
+                            each country in countries
+                                option #{country.governmentform}
                 tr
                     td.col_l Head of State
                     td

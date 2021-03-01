@@ -23,3 +23,16 @@ exports.retrieve = async function(Model, query){
         return stuff; 
     }
 }
+
+exports.upsert = async function(obj){
+    await mongoose.connect(constr, conparam);
+    db.once("open", function() { //open connection
+        console.log("Connected to server by mongoose")
+    });
+
+    try{
+        obj.save();
+    } catch(e) {
+        console.log(e);
+    }
+}

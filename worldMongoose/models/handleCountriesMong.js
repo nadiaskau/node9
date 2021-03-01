@@ -12,7 +12,7 @@ const countrySchema = mongoose.Schema({
     population: Number,
     lifeexpectancy: Number,
     gnp: Number,
-    gnpOld: Number, 
+    gnpold: Number, 
     localname: String,
     governmentform: String,
     headofstate: String,
@@ -73,4 +73,37 @@ exports.getContinentsAndGovernment = async function (res) {
     } catch (e) {
         console.log(e);
     }
+}
+
+exports.postCountry = async function(req, res){
+    let chk = {name: req.body.name}; //not sure if we can use it 
+    let country = new Country({
+        code: req.body.code,
+        name: req.body.name,
+        continent: req.body.continent,
+        region: req.body.region,
+        surfacearea: req.body.surfacearea,
+        indepyear: req.body.indepyear,
+        population: req.body.population,
+        lifeexpectancy: req.body.lifeexpectancy,
+        gnp: req.body.gnp,
+        gnpold: req.body.gnpold,
+        localname: req.body.localname,
+        governmentform: req.body.governmentform,
+        headofstate: req.body.headofstate,
+        capital: null,
+        code2: req.body.code2
+    });
+
+    if (req.body.localname === "") {
+        country.localname = country.name;
+    }
+    try {
+        await goose.upsert(country);
+        res.redirect("/");
+    } catch (e) {
+        console.log(e);
+    }
+
+
 }

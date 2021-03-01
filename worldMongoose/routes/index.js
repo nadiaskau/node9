@@ -26,7 +26,7 @@ router.get('/countryData', function(req, res, next) {
     mongCountry.getContinentsAndGovernment(res);
 });
 router.post("/countryData", function(req, res, next) {
-    modCountry.postCountry(req, res, next);
+    mongCountry.postCountry(req, res, next);
 });
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const mong = require("mongooseWrap");
+const mong = require("./mongooseWrap");
 
 const countrySchema = mongoose.Schema({
     code: String, 
@@ -17,7 +17,7 @@ const countrySchema = mongoose.Schema({
     headofstate: String,
     capital: Number, 
     code2: String
-})
+});
 
 const Country = mongoose.model("Country", countrySchema, 'country');
 

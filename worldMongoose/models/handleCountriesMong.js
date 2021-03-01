@@ -48,7 +48,7 @@ exports.getCountries = async function(res){
 
 exports.getCountry = async function (res, ctryname) {
     try {
-        let countries = await goose.retrieve(Country);
+        let countries = await goose.retrieve(Country, {"name": ctryname});
         res.render('countryDisplay', {
             title: 'Fragments of the World',
             subtitle: ctryname,

@@ -16,14 +16,14 @@ router.get('/country', function(req, res, next) {
     mongCountry.getCountries(res);
 });
 router.get('/country/:country', function(req, res, next) {
-    modCountry.getCountry(res, req.params.country);
+    mongCountry.getCountry(res, req.params.country);
 });
 router.post("/country", function(req, res, next) {
-    modCountry.getCountry(res, req.body.ctry);
+    mongCountry.getCountry(res, req.body.ctry);
 });
 
 router.get('/countryData', function(req, res, next) {
-    modCountry.getContinentsAndGovernment(res);
+    mongCountry.getContinentsAndGovernment(res);
 });
 router.post("/countryData", function(req, res, next) {
     modCountry.postCountry(req, res, next);

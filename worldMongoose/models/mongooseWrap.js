@@ -31,7 +31,8 @@ exports.upsert = async function(obj){
     });
 
     try{
-        obj.save();
+        await obj.save();
+        db.close();
     } catch(e) {
         console.log(e);
     }

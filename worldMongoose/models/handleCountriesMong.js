@@ -60,13 +60,13 @@ exports.getCountry = async function (res, ctryname) {
 }
 
 //Register new country
-exports.getContinentsAndGovernment = async function (res) {
+exports.getContinentsAndGovernment = async function (res, view, sub) {
     try {
         let con = await goose.retrieve(Continent); //get continents from that collection
         let gov = await goose.retrieve(Government); //get governtmentforms from that collection
-        res.render('countryData', {
+        res.render(view, {
             title: 'Fragments of the World',
-            subtitle: 'Select Country',
+            subtitle: sub,
             continents: con, 
             governs: gov
         });
@@ -104,6 +104,18 @@ exports.postCountry = async function(req, res){
     } catch (e) {
         console.log(e);
     }
-
-
 }
+
+exports.getContinentLanguages = async function (res, continent) {
+    try {
+        let continents = await goose.retrieve(Country, {"name": continent});
+        res.render('continentDisplay', {
+            title: 'Fragments of the World',
+            subtitle: continent,
+            continents: continents 
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+

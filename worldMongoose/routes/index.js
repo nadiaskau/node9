@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const modCountry = require("../models/handleCountries");
 const mongCountry = require("../models/handleCountriesMong.js");
 
 /* GET home page. */
@@ -22,8 +21,16 @@ router.post("/country", function(req, res, next) {
     mongCountry.getCountry(res, req.body.ctry);
 });
 
+router.get("/continent", function(req, res, next) {
+    mongCountry.getContinentsAndGovernment(res, 'continent', 'Select continent');
+});
+
+router.post("/continent", function(req, res, next) {
+    mongCountry.getContinentLanguages(res, req.body.continent);
+});
+
 router.get('/countryData', function(req, res, next) {
-    mongCountry.getContinentsAndGovernment(res);
+    mongCountry.getContinentsAndGovernment(res, 'countryData', 'Register country');
 });
 router.post("/countryData", function(req, res, next) {
     mongCountry.postCountry(req, res, next);

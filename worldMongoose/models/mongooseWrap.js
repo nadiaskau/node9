@@ -13,7 +13,13 @@ exports.retrieve = async function(Model){
         console.log("Connected to server by mongoose")
     });
     
-    stuff = await Model.find({}); //find data
-    console.log(stuff);
-    db.close(); 
+    try {
+        stuff = await Model.find({}); //find data
+    } catch(err) {
+        console.log(err);
+    } finally {
+        console.log("Found stuff with mongoose girl");
+        db.close(); 
+        return stuff; 
+    }
 }

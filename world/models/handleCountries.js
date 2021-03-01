@@ -3,11 +3,11 @@ const mon = require("./mongoWrap");
 const dbServer = "localhost";
 const dbName = "world";
 
-//Used for selection of countries and register country
-exports.getCountries = async function (res, view) {
+//Used for selection of countries
+exports.getCountries = async function (res) {
     try {
         let cs = await mon.retrieve(dbServer, dbName, "country", {});
-        res.render(view, {
+        res.render('country', {
             title: 'Fragments of the World',
             subtitle: 'Select Country',
             countries: cs
@@ -30,6 +30,24 @@ exports.getCountry = async function (res, ctryname) {
         console.log(e);
     }
 }
+
+//Register new country
+exports.getContinentsAndGovernment = async function (res) {
+    try {
+        let con = await mon.retrieve(dbServer, dbName, "continent", {}); //get continents from that collection
+        let gov = await mon.retrieve(dbServer, dbName, "governmentform", {}); //get governtmentforms from that collection
+        console.log(gov);
+        res.render('countryData', {
+            title: 'Fragments of the World',
+            subtitle: 'Select Country',
+            continents: con, 
+            governs: gov
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 
 exports.postCountry = async function (req, res, next) {
     let chk = { name: req.body.name };  // check object for existence

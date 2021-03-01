@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    h1= title
+    h2= subtitle
+
+    form(id='countrySelectForm' action='/country' method='post')
+        div
+            select(name='ctry')
+                each country in countries
+                    option #{country.name}
+        p
+            input(type='submit' value='Go')
+    hr
+    p Preselected
+    ul(class='presel')
+        li
+            a(href="/country/Denmark") Denmark
+        li
+            a(href="/country/Sweden") Sweden
+        li
+            a(href="/country/Norway") Norway
+        li
+            a(href="/country/Finland") Finland

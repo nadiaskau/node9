@@ -1,41 +1,10 @@
 const mongoose = require("mongoose");
 const goose = require("./mongooseWrap");
-
-//COUNTRY
-const countrySchema = mongoose.Schema({
-    code: String, 
-    name: String, 
-    continent: String, 
-    region: String,
-    surfacearea: Number, 
-    indepyear: Number,
-    population: Number,
-    lifeexpectancy: Number,
-    gnp: Number,
-    gnpold: Number, 
-    localname: String,
-    governmentform: String,
-    headofstate: String,
-    capital: Number, 
-    code2: String
-});
-const Country = mongoose.model("Country", countrySchema, 'country');
-
-//CONTINENT
-const continentSchema = mongoose.Schema({
-    name: String
-}); 
-const Continent = mongoose.model("Continent", continentSchema, 'continent');
-
-//GOVERNMENTFORM
-const governmentformSchema = mongoose.Schema({
-    name: String
-});
-const Government = mongoose.model("Government", governmentformSchema, 'governmentform');
+const model = require("./schemas");
 
 exports.getCountries = async function(res){
     try {
-        let countries = await goose.retrieve(Country);
+        let countries = await goose.retrieve(model.Country);
         res.render('country', {
             title: 'Fragments of the World',
             subtitle: 'Select Country',
@@ -48,7 +17,7 @@ exports.getCountries = async function(res){
 
 exports.getCountry = async function (res, ctryname) {
     try {
-        let countries = await goose.retrieve(Country, {"name": ctryname});
+        let countries = await goose.retrieve(model.Country, {"name": ctryname});
         res.render('countryDisplay', {
             title: 'Fragments of the World',
             subtitle: ctryname,
@@ -62,8 +31,8 @@ exports.getCountry = async function (res, ctryname) {
 //Register new country
 exports.getContinentsAndGovernment = async function (res, view, sub) {
     try {
-        let con = await goose.retrieve(Continent); //get continents from that collection
-        let gov = await goose.retrieve(Government); //get governtmentforms from that collection
+        let con = await goose.retrieve(model.Continent); //get continents from that collection
+        let gov = await goose.retrieve(model.Government); //get governtmentforms from that collection
         res.render(view, {
             title: 'Fragments of the World',
             subtitle: sub,
@@ -77,7 +46,7 @@ exports.getContinentsAndGovernment = async function (res, view, sub) {
 
 exports.postCountry = async function(req, res){
     let chk = {name: req.body.name}; //not sure if we can use it 
-    let country = new Country({
+    let country = new model.Country({
         code: req.body.code,
         name: req.body.name,
         continent: req.body.continent,
@@ -108,11 +77,23 @@ exports.postCountry = async function(req, res){
 
 exports.getContinentLanguages = async function (res, continent) {
     try {
-        let continents = await goose.retrieve(Country, {"name": continent});
+        let languages = await goose.retrieve(model.CountryLanguage);
+        let countries = await goose.retrieve(model.Country, {"continent": continent}); //all countries in the chosen continent
+        let spokenLang = []; 
+
+        for (const country in countries) { //iteration through found countries 
+            for (const language in languages) { //iteration through all languages
+                if(languages[language].countrycode == countries[country].code //comparing countrycodes
+                    && !spokenLang.includes(languages[language].language)){ //no duplicates
+                    spokenLang.push(languages[language].language); 
+                }
+            }
+        }
+
         res.render('continentDisplay', {
             title: 'Fragments of the World',
             subtitle: continent,
-            continents: continents 
+            languages: spokenLang,
         });
     } catch (e) {
         console.log(e);

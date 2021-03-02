@@ -25,6 +25,10 @@ router.get("/continent", function(req, res, next) {
     mongCountry.getContinentsAndGovernment(res, 'continent', 'Select continent');
 });
 
+router.get('/continent/:continent', function(req, res, next) {
+    mongCountry.getContinentLanguages(res, req.params.continent);
+});
+
 router.post("/continent", function(req, res, next) {
     mongCountry.getContinentLanguages(res, req.body.continent);
 });

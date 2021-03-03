@@ -81,11 +81,12 @@ exports.getContinentLanguages = async function (res, continent) {
         let countries = await goose.retrieve(model.Country, {"continent": continent}); //all countries in the chosen continent
         let spokenLang = []; 
 
-        for (const country in countries) { //iteration through found countries 
-            for (const language in languages) { //iteration through all languages
-                if(languages[language].countrycode == countries[country].code //comparing countrycodes
-                    && !spokenLang.includes(languages[language].language)){ //no duplicates
-                    spokenLang.push(languages[language].language); 
+        for (const country of countries) { //iteration through found countries 
+            
+            for (const language of languages) { //iteration through all languages
+                if(language.countrycode == country.code //comparing countrycodes
+                    && !spokenLang.includes(language.language)){ //no duplicates
+                    spokenLang.push(language.language); 
                 }
             }
         }

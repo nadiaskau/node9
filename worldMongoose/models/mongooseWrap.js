@@ -45,47 +45,13 @@ exports.retrieveDistinct = async function (Model, query) {
     return stuff
 }
 
-/* exports.count = async function (Model, query) {
-    await mongoose.connect(constr, conparam);
-    db.once("open", function () { //open connection
-        console.log("Connected to server by mongoose")
-    });
-
-    db.items.aggregate([ 
-        // unwind binding collection
-        { $unwind : "$countryLanguage" }, 
-      
-        // group and count by relevant attributes
-        { 
-          $group : { 
-            _id : { 
-              status: "$language", 
-              delivery_date: "$countrycode"
-            }, 
-            count: { $sum: 1 }
-          } 
-        }, 
-      
-        // get proper counts
-        { 
-          $match : { 
-            "_id.status" : "Arabic",
-            "_id.delivery_date" : "15-03-2016"
-          }
-        } 
-      ], function(err, docs) {
-        // ...
-      });
-} */
-
-
 exports.count = async function (Model, query) {
     await mongoose.connect(constr, conparam);
     let stuff = null;
     db.once("open", function () { //open connection
         console.log("Connected to server by mongoose")
     });
-
+    
     stuff = await Model.countDocuments(query, function (err, count) {
         if (err) {
             console.log(err)

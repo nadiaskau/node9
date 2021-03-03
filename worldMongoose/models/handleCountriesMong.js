@@ -123,13 +123,13 @@ exports.getContinentLanguages = async function (res, continent) {
     }
 }
 
-exports.getLanguages = async function(res, view){
+exports.getLanguages = async function(res){
     try {
         let query = 'language';
         let languages = await goose.retrieveDistinct(model.CountryLanguage, query);
         let count = languages.length;
 
-        res.render(view, {
+        res.render('languages', {
             title: 'Fragments of the World',
             languages: languages,
             count: count
@@ -138,4 +138,32 @@ exports.getLanguages = async function(res, view){
     catch (e) {
     console.log(e);
     } 
+}
+
+exports.getLanguageSelection = async function(res){
+    try {
+        let query = 'language';
+        let languages = await goose.retrieveDistinct(model.CountryLanguage, query);
+
+        res.render('language', {
+            title: 'Fragments of the World',
+            languages: languages,
+        });
+    }
+    catch (e) {
+    console.log(e);
+    } 
+}
+
+exports.getLanguageRank = async function(res, language){
+    let QUERY = {
+        language: language
+    }; 
+    let rank = await goose.retrieve(model.CountryLanguage, QUERY); 
+    
+    res.render('languageDisplay', {
+        title: 'Fragments of the World',
+        language: language,
+        rank: rank.length
+    });
 }

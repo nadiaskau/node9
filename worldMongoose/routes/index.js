@@ -40,11 +40,17 @@ router.post("/countryData", function(req, res, next) {
 });
 
 router.get('/languages', function(req, res, next) {
-    mongCountry.getLanguages(res, 'languages');
+    mongCountry.getLanguages(res);
 });
 
 router.get('/language', function(req, res, next) {
-    mongCountry.getLanguages(res, 'language');
+    mongCountry.getLanguageSelection(res);
 });
+
+router.post('/language', function(req, res, next) {
+    mongCountry.getLanguageRank(res, req.body.language);
+});
+
+
 
 module.exports = router;

@@ -1,6 +1,12 @@
 extends layout
 block content 
     table
-    each continent in continent
-        tr
-            th #{continent}
+
+        each continent in continents
+            th #{continent.name}
+            tr
+                each country in continent.countries
+                    td #{country}
+                    tr
+                    
+        

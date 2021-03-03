@@ -196,7 +196,6 @@ exports.countriesPrContinent = async function(res){
 
         res.render('countriesSorted', {
         title: 'Fragments of the World',
-        countries: countries,
         continents: conArr
     });
 

@@ -31,6 +31,25 @@ exports.retrieve = async function (Model, query) {
     }
 }
 
+exports.retrieveAndSort = async function (Model, sort) {
+    let stuff = null;
+    await mongoose.connect(constr, conparam);
+    db.once("open", function () { //open connection
+        console.log("Connected to server by mongoose")
+    });
+
+    try {
+        stuff = await Model.find({}, null, sort); //find data
+
+    } catch (err) {
+        console.log(err);
+    } finally {
+        console.log("Found stuff with mongoose girl");
+        db.close();
+        return stuff;
+    }
+}
+
 exports.retrieveDistinct = async function (Model, query) {
     let stuff = null;
     await mongoose.connect(constr, conparam);

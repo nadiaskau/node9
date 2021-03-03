@@ -167,3 +167,37 @@ exports.getLanguageRank = async function(res, language){
         rank: rank.length
     });
 }
+
+exports.countriesPrContinent = async function(res){
+    let SORT = {
+        sort: {
+            continent: -1
+        }
+    }
+    let countries = await goose.retrieveAndSort(model.Country, SORT);
+    let con = await goose.retrieve(model.Continent); //get continents from that collection
+    let conArr = [];
+    function Continent(name){
+        this.name = name;
+        this.countries = [];
+    }
+
+    for (let i = 0; i < con.length; i++) {
+        conArr.push(new Continent(con[i].name));
+        for (let y = 0; y < countries.length; y++) {
+            if(conArr[i].name == countries[y].continent){
+                conArr[i].countries.push(countries[y].name);
+            }
+        }        
+    }
+
+    console.log(conArr);
+    
+
+        res.render('countriesSorted', {
+        title: 'Fragments of the World',
+        countries: countries,
+        continents: conArr
+    });
+
+}

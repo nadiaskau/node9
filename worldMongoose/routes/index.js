@@ -51,6 +51,8 @@ router.post('/language', function(req, res, next) {
     mongCountry.getLanguageRank(res, req.body.language);
 });
 
-
+router.get('/countriesSorted', function(req, res, next){
+    mongCountry.countriesPrContinent(res);
+});
 
 module.exports = router;

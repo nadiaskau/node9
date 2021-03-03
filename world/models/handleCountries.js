@@ -36,7 +36,6 @@ exports.getContinentsAndGovernment = async function (res) {
     try {
         let con = await mon.retrieve(dbServer, dbName, "continent", {}); //get continents from that collection
         let gov = await mon.retrieve(dbServer, dbName, "governmentform", {}); //get governtmentforms from that collection
-        console.log(gov);
         res.render('countryData', {
             title: 'Fragments of the World',
             subtitle: 'Select Country',

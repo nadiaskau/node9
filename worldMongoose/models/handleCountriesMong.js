@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const goose = require("./mongooseWrap");
 const model = require("./schemas");
 
-exports.getCountries = async function(res){
+exports.getCountries = async function (res) {
     try {
         let countries = await goose.retrieve(model.Country);
         res.render('country', {
@@ -17,7 +17,9 @@ exports.getCountries = async function(res){
 
 exports.getCountry = async function (res, ctryname) {
     try {
-        let countries = await goose.retrieve(model.Country, {"name": ctryname});
+        let countries = await goose.retrieve(model.Country, {
+            "name": ctryname
+        });
         res.render('countryDisplay', {
             title: 'Fragments of the World',
             subtitle: ctryname,
@@ -36,7 +38,7 @@ exports.getContinentsAndGovernment = async function (res, view, sub) {
         res.render(view, {
             title: 'Fragments of the World',
             subtitle: sub,
-            continents: con, 
+            continents: con,
             governs: gov
         });
     } catch (e) {
@@ -44,8 +46,10 @@ exports.getContinentsAndGovernment = async function (res, view, sub) {
     }
 }
 
-exports.postCountry = async function(req, res){
-    let chk = {name: req.body.name}; //not sure if we can use it 
+exports.postCountry = async function (req, res) {
+    let chk = {
+        name: req.body.name
+    }; //not sure if we can use it 
     let country = new model.Country({
         code: req.body.code,
         name: req.body.name,
@@ -78,18 +82,34 @@ exports.postCountry = async function(req, res){
 exports.getContinentLanguages = async function (res, continent) {
     try {
         let languages = await goose.retrieve(model.CountryLanguage);
-        let countries = await goose.retrieve(model.Country, {"continent": continent}); //all countries in the chosen continent
-        let spokenLang = []; 
+        let countries = await goose.retrieve(model.Country, {
+            "continent": continent
+        }); //all countries in the chosen continent
+        let spokenLang = [];
+        let countLang = [];
+        let allLang = [];
 
-        for (const country of countries) { //iteration through found countries 
-            
+        for (const country of countries) { //iteration through found countries       
             for (const language of languages) { //iteration through all languages
-                if(language.countrycode == country.code //comparing countrycodes
-                    && !spokenLang.includes(language.language)){ //no duplicates
-                    spokenLang.push(language.language); 
+                if (language.countrycode == country.code) {
+                    allLang.push(language.language);
+                } 
+                if (language.countrycode == country.code&& !spokenLang.includes(language.language)) { //no duplicates
+                    spokenLang.push(language.language);
                 }
             }
         }
+
+        for (let i = 0; i < spokenLang.length; i++) {
+             let count = 0; 
+             for (let y = 0; y < allLang.length; y++) {
+                if(spokenLang[i] == allLang[y]){
+                    count++; 
+                }   
+             }  
+             countLang.push(count);          
+        }
+        console.log(countLang);
 
         res.render('continentDisplay', {
             title: 'Fragments of the World',
@@ -100,4 +120,3 @@ exports.getContinentLanguages = async function (res, continent) {
         console.log(e);
     }
 }
-

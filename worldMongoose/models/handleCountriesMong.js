@@ -94,8 +94,8 @@ exports.getContinentLanguages = async function (res, continent) {
             for (const language of languages) { //iteration through all languages
                 if (language.countrycode == country.code) {
                     allLang.push(language.language); //creating array with all occurenses 
-                } 
-                if (language.countrycode == country.code&& !spokenLang.includes(language.language)) { //no duplicates
+                }
+                if (language.countrycode == country.code && !spokenLang.includes(language.language)) { //no duplicates
                     spokenLang.push(language.language);
                 }
             }
@@ -103,13 +103,13 @@ exports.getContinentLanguages = async function (res, continent) {
 
         //Counting our languages
         for (let i = 0; i < spokenLang.length; i++) {
-             let count = 0; 
-             for (let y = 0; y < allLang.length; y++) {
-                if(spokenLang[i] == allLang[y]){
-                    count++; 
-                }   
-             }  
-             countLang.push(count);          
+            let count = 0;
+            for (let y = 0; y < allLang.length; y++) {
+                if (spokenLang[i] == allLang[y]) {
+                    count++;
+                }
+            }
+            countLang.push(count);
         }
 
         res.render('continentDisplay', {
@@ -123,7 +123,8 @@ exports.getContinentLanguages = async function (res, continent) {
     }
 }
 
-exports.getLanguages = async function(res){
+//ALL LANGUAGES AND COUNT OF THEM
+exports.getLanguages = async function (res) {
     try {
         let query = 'language';
         let languages = await goose.retrieveDistinct(model.CountryLanguage, query);
@@ -134,13 +135,13 @@ exports.getLanguages = async function(res){
             languages: languages,
             count: count
         });
+    } catch (e) {
+        console.log(e);
     }
-    catch (e) {
-    console.log(e);
-    } 
 }
 
-exports.getLanguageSelection = async function(res){
+//DROP DOWN FOR LANGUAGES
+exports.getLanguageSelection = async function (res) {
     try {
         let query = 'language';
         let languages = await goose.retrieveDistinct(model.CountryLanguage, query);
@@ -149,18 +150,18 @@ exports.getLanguageSelection = async function(res){
             title: 'Fragments of the World',
             languages: languages,
         });
+    } catch (e) {
+        console.log(e);
     }
-    catch (e) {
-    console.log(e);
-    } 
 }
 
-exports.getLanguageRank = async function(res, language){
+//RANKING OF LANGUAGES
+exports.getLanguageRank = async function (res, language) {
     let QUERY = {
         language: language
-    }; 
-    let rank = await goose.retrieve(model.CountryLanguage, QUERY); 
-    
+    };
+    let rank = await goose.retrieve(model.CountryLanguage, QUERY);
+
     res.render('languageDisplay', {
         title: 'Fragments of the World',
         language: language,
@@ -168,7 +169,8 @@ exports.getLanguageRank = async function(res, language){
     });
 }
 
-exports.countriesPrContinent = async function(res){
+//GROUPED COUNTRIES PR CONTINENT
+exports.countriesPrContinent = async function (res) {
     let SORT = {
         sort: {
             continent: -1
@@ -177,7 +179,8 @@ exports.countriesPrContinent = async function(res){
     let countries = await goose.retrieveAndSort(model.Country, SORT);
     let con = await goose.retrieve(model.Continent); //get continents from that collection
     let conArr = [];
-    function Continent(name){
+
+    function Continent(name) {
         this.name = name;
         this.countries = [];
     }
@@ -185,18 +188,32 @@ exports.countriesPrContinent = async function(res){
     for (let i = 0; i < con.length; i++) {
         conArr.push(new Continent(con[i].name));
         for (let y = 0; y < countries.length; y++) {
-            if(conArr[i].name == countries[y].continent){
+            if (conArr[i].name == countries[y].continent) {
                 conArr[i].countries.push(countries[y].name);
             }
-        }        
+        }
     }
 
-    console.log(conArr);
-    
-
-        res.render('countriesSorted', {
+    res.render('countriesSorted', {
         title: 'Fragments of the World',
         continents: conArr
     });
+}
 
+exports.getCityNamesakes = async function (res) {
+    try {
+        let cities = await goose.retrieve(model.City);
+        
+        for (const city of cities) {
+            
+        }
+
+        res.render('languages', {
+            title: 'Fragments of the World',
+            languages: languages,
+            count: count
+        });
+    } catch (e) {
+        console.log(e);
+    }
 }

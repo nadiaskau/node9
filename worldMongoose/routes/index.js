@@ -55,4 +55,8 @@ router.get('/countriesSorted', function(req, res, next){
     mongCountry.countriesPrContinent(res);
 });
 
+router.get('/cities', function(req, res, next){
+    mongCountry.getCityNamesakes(res);
+});
+
 module.exports = router;

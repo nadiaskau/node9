@@ -1,12 +1,14 @@
 extends layout
 block content 
-    table
-
+    div(id="countrycontinent")
+        
         each continent in continents
-            th #{continent.name}
-            tr
-                each country in continent.countries
-                    td #{country}
-                    tr
-                    
+            table
+                th(class="continenthead") #{continent.name}
+                tr
+                    each country in continent.countries
+                        tr
+                        td #{country}
+                      
+                        
         

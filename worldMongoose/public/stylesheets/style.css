@@ -18,3 +18,15 @@ a {
 #tablelanguageContainer{
   display: flex;
 }
+
+#countrycontinent{
+  display: flex;
+  text-align: left;
+  margin: auto;
+}
+
+#countrycontinent table{
+  border: 1px solid gray;
+  padding: 10px;
+  margin: 10px;
+}

@@ -1,5 +1,16 @@
 const mongoose = require("mongoose");
 const goose = require("./mongooseWrap");
+//CITY
+
+const citySchema = mongoose.Schema({
+    oldid: Number,
+    name: String,
+    countrycode: String,
+    district: String,
+    population: Number
+});
+
+const City = mongoose.model("City", citySchema, 'city');
 
 //COUNTRY
 const countrySchema = mongoose.Schema({
@@ -47,3 +58,4 @@ exports.Country = Country;
 exports.Continent = Continent; 
 exports.Government = Government;
 exports.CountryLanguage = CountryLanguage;
+exports.City = City;

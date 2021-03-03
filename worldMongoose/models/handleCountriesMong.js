@@ -203,15 +203,25 @@ exports.countriesPrContinent = async function (res) {
 exports.getCityNamesakes = async function (res) {
     try {
         let cities = await goose.retrieve(model.City);
+        let citiesCompare = cities.slice();
+        let count=[];
         
-        for (const city of cities) {
+/*         for (const city of cities) {
+            let counter = 0; 
             
+            for (const cityCompare of citiesCompare){
+                if(city.name == cityCompare.name && city.countrycode !== cityCompare.countrycode){
+                    counter++;
+                    console.log(counter);
+                }
+                count.push(counter);
+            }
         }
+        console.log(count); */
+  
 
-        res.render('languages', {
+        res.render('cities', {
             title: 'Fragments of the World',
-            languages: languages,
-            count: count
         });
     } catch (e) {
         console.log(e);

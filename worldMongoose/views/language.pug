@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h1= title
+    h2= subtitle
+
+    form(id='languageSelectForm' action='/lanuage' method='post')
+        div
+            select(name='language')
+                each language in languages
+                    option #{language}
+        p
+            input(type='submit' value='Go')
+    hr

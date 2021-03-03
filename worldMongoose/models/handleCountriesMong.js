@@ -123,13 +123,13 @@ exports.getContinentLanguages = async function (res, continent) {
     }
 }
 
-exports.getLanguages = async function(res){
+exports.getLanguages = async function(res, view){
     try {
         let query = 'language';
         let languages = await goose.retrieveDistinct(model.CountryLanguage, query);
         let count = languages.length;
 
-        res.render('languages', {
+        res.render(view, {
             title: 'Fragments of the World',
             languages: languages,
             count: count
@@ -137,9 +137,5 @@ exports.getLanguages = async function(res){
     }
     catch (e) {
     console.log(e);
-}
-    
-
-
-
+    } 
 }

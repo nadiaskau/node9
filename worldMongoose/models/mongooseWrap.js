@@ -31,7 +31,21 @@ exports.retrieve = async function (Model, query) {
     }
 }
 
-exports.count = async function (Model, query) {
+exports.retrieveDistinct = async function (Model, query) {
+    let stuff = null;
+    await mongoose.connect(constr, conparam);
+    db.once("open", function () { //open connection
+        console.log("Connected to server by mongoose")
+    });
+
+    await Model.find().distinct(query, function (err, items) {
+        stuff = items;
+
+    });
+    return stuff
+}
+
+/* exports.count = async function (Model, query) {
     await mongoose.connect(constr, conparam);
     db.once("open", function () { //open connection
         console.log("Connected to server by mongoose")
@@ -62,24 +76,25 @@ exports.count = async function (Model, query) {
       ], function(err, docs) {
         // ...
       });
-}
+} */
 
 
 exports.count = async function (Model, query) {
     await mongoose.connect(constr, conparam);
+    let stuff = null;
     db.once("open", function () { //open connection
         console.log("Connected to server by mongoose")
     });
 
-    await Model.countDocuments(query, function (err, count) {
+    stuff = await Model.countDocuments(query, function (err, count) {
         if (err) {
             console.log(err)
         } else {
             console.log("Count is", count)
             db.close();
-            return count;
         }
     });
+    return stuff;
 }
 
 exports.upsert = async function (obj) {

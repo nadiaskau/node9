@@ -6,3 +6,15 @@ body {
 a {
   color: #00B7FF;
 }
+
+#tablecontainer{
+  display: flex;
+}
+
+#tablecontainer table th{
+  text-align: left;
+}
+
+#tablelanguageContainer{
+  display: flex;
+}

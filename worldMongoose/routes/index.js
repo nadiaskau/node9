@@ -11,7 +11,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/country', function(req, res, next) {
-    //modCountry.getCountries(res);
     mongCountry.getCountries(res);
 });
 router.get('/country/:country', function(req, res, next) {
@@ -38,6 +37,10 @@ router.get('/countryData', function(req, res, next) {
 });
 router.post("/countryData", function(req, res, next) {
     mongCountry.postCountry(req, res, next);
+});
+
+router.get('/languages', function(req, res, next) {
+    mongCountry.getLanguages(res);
 });
 
 module.exports = router;

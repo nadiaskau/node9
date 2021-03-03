@@ -4,6 +4,15 @@ block content
     h1= title
     h2= subtitle
 
-    div Languages spoken: 
-        each language in languages
-            li #{language}
+    p Languages spoken:
+    div(id='tablecontainer')
+        table 
+            th Language
+            each language in languages        
+                tr
+                    td #{language}
+        table 
+            th Occurences
+            each count in counts
+                tr
+                    td #{count}

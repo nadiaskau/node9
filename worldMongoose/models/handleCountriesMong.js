@@ -89,10 +89,11 @@ exports.getContinentLanguages = async function (res, continent) {
         let countLang = [];
         let allLang = [];
 
+        //Finding languages 
         for (const country of countries) { //iteration through found countries       
             for (const language of languages) { //iteration through all languages
                 if (language.countrycode == country.code) {
-                    allLang.push(language.language);
+                    allLang.push(language.language); //creating array with all occurenses 
                 } 
                 if (language.countrycode == country.code&& !spokenLang.includes(language.language)) { //no duplicates
                     spokenLang.push(language.language);
@@ -100,6 +101,7 @@ exports.getContinentLanguages = async function (res, continent) {
             }
         }
 
+        //Counting our languages
         for (let i = 0; i < spokenLang.length; i++) {
              let count = 0; 
              for (let y = 0; y < allLang.length; y++) {
@@ -109,14 +111,35 @@ exports.getContinentLanguages = async function (res, continent) {
              }  
              countLang.push(count);          
         }
-        console.log(countLang);
 
         res.render('continentDisplay', {
             title: 'Fragments of the World',
             subtitle: continent,
             languages: spokenLang,
+            counts: countLang
         });
     } catch (e) {
         console.log(e);
     }
+}
+
+exports.getLanguages = async function(res){
+    try {
+        let query = 'language';
+        let languages = await goose.retrieveDistinct(model.CountryLanguage, query);
+        let count = languages.length;
+
+        res.render('languages', {
+            title: 'Fragments of the World',
+            languages: languages,
+            count: count
+        });
+    }
+    catch (e) {
+    console.log(e);
+}
+    
+
+
+
 }
